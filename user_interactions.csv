@@ -1,0 +1,14 @@
+user_id,video_id,category_id,interaction_type
+630d1430-5d6c-4892-a857-3787739585ed,973f24c0-15b2-434f-8740-4e2726f79c30,973f24c0-15b2-434f-8740-4e2726f79c30,dislike
+eeee9922-babb-4780-97bd-9786b3cd3fca,26c884e0-2056-4560-8629-8f6808411495,Техника и оборудование,like
+ab6028ae-8a25-4ef4-8cbe-dc28289466f2,23a10994-995e-4714-9432-312c44a56a76,Телепередачи,like
+ab6028ae-8a25-4ef4-8cbe-dc28289466f2,23a10994-995e-4714-9432-312c44a56a76,Телепередачи,dislike
+ab6028ae-8a25-4ef4-8cbe-dc28289466f2,23a10994-995e-4714-9432-312c44a56a76,Телепередачи,comment
+f953488f-ef5a-401e-b12c-5d316e2f550e,6ed4aa73-5928-43c5-96c6-0af257e048b7,Развлечения,like
+f953488f-ef5a-401e-b12c-5d316e2f550e,6ed4aa73-5928-43c5-96c6-0af257e048b7,Развлечения,comment
+bb5fe131-dacf-4d36-ad38-ac9b81f98851,eb1eecbd-ba02-4f1e-8262-71761925af40,Телепередачи,no_like_either_dislike
+151bce07-6793-40dc-a4c9-9f7a34e082c8,2465251b-5a87-4365-b5b0-a175175103cc,Аниме,dislike
+18b96584-a68d-43bb-b113-83a7df26f832,c46484ef-72fb-4d63-9e48-2c73d2f449cc,Мультфильмы,no_like_either_dislike
+18b96584-a68d-43bb-b113-83a7df26f832,c46484ef-72fb-4d63-9e48-2c73d2f449cc,Мультфильмы,comment
+9e4f3353-33d7-4039-a278-6ee2e8c6d1e0,cedc2137-1cba-4ece-8f20-d05f859dfd0e,Красота,like
+9e4f3353-33d7-4039-a278-6ee2e8c6d1e0,cedc2137-1cba-4ece-8f20-d05f859dfd0e,Красота,comment
