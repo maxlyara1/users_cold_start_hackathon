@@ -58,6 +58,8 @@ def display_page(df_logs_5, df_video, user_id):
             df_ranks_grouped
         )  # Первая рекомендация категорий
     else:
+        if "interactions_data" not in st.session_state:
+            st.session_state.interactions_data = pd.DataFrame()
         number_videos_from_cat = recommend_categories(
             df_ranks_grouped, st.session_state.interactions_data
         )  # Рекомендации на основе взаимодействий

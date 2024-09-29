@@ -1,71 +1,3 @@
-import pandas as pd
-import streamlit as st
-
-
-@st.cache_data
-def first_recommend_categories(df_ranks_grouped, total_representatives=10):
-    """
-    Рекомендует категории при первом запуске на основе обратного ранга.
-
-    Args:
-        df_ranks_grouped (pd.DataFrame): DataFrame с агрегированными рангами категорий.
-        total_representatives (int): Общее количество рекомендованных видео.
-
-    Returns:
-        pd.DataFrame: DataFrame с категориями, количеством видео и процентами.
-    """
-    df = df_ranks_grouped.copy()  # Создаем копию DataFrame для обработки
-    df["inverse_rank"] = 1 / df["avg_rank"]  # Вычисляем обратный ранг
-    df["proportion"] = (
-        df["inverse_rank"] / df["inverse_rank"].sum()
-    )  # Вычисляем пропорцию для каждой категории
-    df["N"] = (
-        (df["proportion"] * total_representatives).round().astype(int)
-    )  # Определяем количество видео для каждой категории
-
-    # Балансировка общего количества видео до total_representatives
-    while df["N"].sum() != total_representatives:
-        diff = (
-            total_representatives - df["N"].sum()
-        )  # Разница между желаемым и текущим количеством видео
-        if diff > 0:
-            idx = df[
-                "proportion"
-            ].idxmax()  # Находим индекс категории с наибольшей пропорцией
-            df.at[idx, "N"] += 1  # Увеличиваем количество видео в этой категории
-        else:
-            idx = df[
-                "proportion"
-            ].idxmin()  # Находим индекс категории с наименьшей пропорцией
-            if df.at[idx, "N"] > 0:
-                df.at[
-                    idx, "N"
-                ] -= 1  # Уменьшаем количество видео в этой категории, если возможно
-            else:
-                sorted_df = df.sort_values(
-                    "proportion"
-                )  # Сортируем категории по пропорции
-                for potential_idx in sorted_df.index:
-                    if df.at[potential_idx, "N"] > 0:
-                        df.at[
-                            potential_idx, "N"
-                        ] -= 1  # Уменьшаем количество видео в первой подходящей категории
-                        break
-
-    # Рассчитываем проценты для каждой категории
-    df["Percentage"] = (df["N"] / total_representatives * 100).round(2)
-
-    # Формируем итоговый DataFrame с необходимыми колонками
-    df_ranks_grouped_N = (
-        df[["category_id", "N", "Percentage"]]
-        .sort_values(by="N", ascending=False)
-        .reset_index(drop=True)
-        .copy()
-    )
-
-    return df_ranks_grouped_N  # Возвращаем итоговый DataFrame
-
-
 @st.cache_data
 def recommend_categories(df_ranks_grouped, interactions_data, total_representatives=10):
     """
@@ -80,6 +12,11 @@ def recommend_categories(df_ranks_grouped, interactions_data, total_representati
         pd.DataFrame: DataFrame с категориями, количеством видео и процентами.
     """
     df = df_ranks_grouped.copy()  # Создаем копию DataFrame для обработки
+
+    # Проверка наличия колонки 'N' в df, если её нет, инициализируем её
+    if "N" not in df.columns:
+        df["N"] = 0  # Инициализация, если не существует
+
     # Создаем словарь весов категорий на основе текущего количества видео
     category_weights = {row["category_id"]: row["N"] for _, row in df.iterrows()}
 
@@ -106,7 +43,7 @@ def recommend_categories(df_ranks_grouped, interactions_data, total_representati
         )  # Проверка на валидность весов
 
     # Обновляем количество видео 'N' на основе новых весов
-    df["N"] = df["category_id"].map(category_weights)
+    df["N"] = df["category_id"].map(category_weights).fillna(0)  # Заполняем NaN нулями
     df["N"] = (df["N"] / total_weight * total_representatives).round().astype(int)
 
     # Балансировка общего количества видео до total_representatives
@@ -140,17 +77,3 @@ def recommend_categories(df_ranks_grouped, interactions_data, total_representati
     )
 
     return df_ranks_grouped_N  # Возвращаем итоговый DataFrame
-
-
-def recommend_subcategories(categories):
-    """
-    Логика рекомендации подкатегорий с использованием эмбеддингов и кластеров.
-
-    Args:
-        categories (pd.DataFrame): DataFrame с рекомендованными категориями.
-
-    Returns:
-        pd.DataFrame: DataFrame с рекомендованными подкатегориями.
-    """
-    # Здесь должна быть ваша реализация рекомендации подкатегорий
-    pass  # Заглушка для будущей реализации
