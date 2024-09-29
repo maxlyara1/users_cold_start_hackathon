@@ -31,7 +31,7 @@
 ## Установка
 
 1. Создайте и активируйте виртуальную среду:
-python -m venv venv \
+python -m venv venv
 - source venv/bin/activate  # Для Mac/Linux
 - venv\Scripts\activate     # Для Windows
 2. Установите зависимости:
