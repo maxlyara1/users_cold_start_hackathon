@@ -31,9 +31,9 @@
 ## Установка
 
 1. Создайте и активируйте виртуальную среду:
-python -m venv venv
-source venv/bin/activate  # Для Mac/Linux
-venv\Scripts\activate     # Для Windows
+python -m venv venv \
+- source venv/bin/activate  # Для Mac/Linux
+- venv\Scripts\activate     # Для Windows
 2. Установите зависимости:
 pip install -r requirements.txt
 3. Использование
